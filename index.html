@@ -8,7 +8,7 @@
     <title>Document</title>
   </head>
   <body>
-    <h2 id="cmc">cmc</h2>
+    <h2 id="cmc">coinmarketcap://coinmarket.com/link</h2>
     <h2 id="tel">tel</h2>
     <h2 id="binance">binance</h2>
     <h2 id="webex">webex</h2>
@@ -27,10 +27,10 @@
         return function () {
           setTimeout(() => {
             document.getElementById("ifm").src = schema;
-          }, 10);
+          }, 20);
           setTimeout(() => {
             window.location = schema;
-          }, 20);
+          }, 40);
         };
       }
       
