@@ -10,10 +10,18 @@
   <body>
     <h2 id="cmc">cmc</h2>
     <h2 id="tel">tel</h2>
+    <h2 id="binance">binance</h2>
+    <h2 id="webex">webex</h2>
+    <h2 id="twitter">twitter</h2>
+    <h2 id="gmail">gmail</h2>
     <iframe id="ifm" src="" frameborder="0"></iframe>
     <script>
-      document.getElementById("cmc").onclick = open("coinmarketcap://");
+      document.getElementById("cmc").onclick = open("coinmarketcap://coinmarket.com/link");
       document.getElementById("tel").onclick = open("tel://10086");
+      document.getElementById("binance").onclick = open("binance://");
+      document.getElementById("gmail").onclick = open("gmail://");
+      document.getElementById("twitter").onclick = open("twitter://");
+      document.getElementById("webex").onclick = open("webex://");
 
       function open(schema) {
         return function () {
