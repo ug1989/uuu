@@ -36,7 +36,7 @@
       
       [...document.querySelectorAll('h2')].forEach(h2 => {
         var schema = h2.innerText;
-        h2.innerHTML = `<a href="${schema}" target="_blank">${schema}</a>`
+        h2.innerHTML = `<a href="${schema}://" target="_blank">${schema}</a>`
       })
     </script>
   </body>
