@@ -21,37 +21,46 @@
   <iframe id="ifr" src=""></iframe>
 </body>
 <script>
-  var inIos = navigator.userAgent.toLowerCase().includes('iphone');
-  var timeout = inIos ? 2000 : 500;
-  let hide = false;
-  document.getElementById("native").onclick = function () {
-    var schema = `coinmarketcap://coinmarketcap.com/link`;
-    var start = Date.now();
-    var timeDiff = 100;
-    var timer = setTimeout(() => {
-      if (Date.now() - start > timeout + timeDiff) clearTimeout(timer);
-      var appStore = "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1";
-      var googleplay = "market://details?id=com.coinmarketcap.android" || "https://play.google.com/store/apps/details?id=com.coinmarketcap.android";
-      !hide && tryCallApp(inIos ? appStore : googleplay);
-    }, timeout);
-    tryCallApp(schema);
-  };
-  
-  document.addEventListener("visibilitychange", function() {
-    if (document.visibilityState == 'hidden') {
-      hide = true;
-      clearTimeout(timer);
-    } 
-  });
+  document.getElementById("native").onclick = () => {
+    const cmcSchema = `coinmarketcap://coinmarketcap.com/link`;
+    const appStore =
+      "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1";
+    const androidMarket = "market://details?id=com.coinmarketcap.android";
 
-  function tryCallApp(schema) {
-    setTimeout(() => {
-      document.getElementById('ifr').src = schema;
-    }, 0);
-    setTimeout(() => {
-      location.href = schema;
-    }, 0);
-  }
+    const inIos = navigator.userAgent.toLowerCase().includes('iphone');
+    const timeout = inIos ? 2000 : 300; // android has no promt lead a quick redriect
+    const callAppTime = Date.now();
+    const timeDiff = 50;
+
+    const timer = setTimeout(() => {
+      if (Date.now() - callAppTime > timeout + timeDiff) {
+        return clearTimeout(timer);
+      }
+      tryCallApp(inIos ? appStore : androidMarket);
+    }, timeout);
+
+    tryCallApp(cmcSchema);
+
+    document.addEventListener("visibilitychange", function checkRedirct() {
+      if (document.visibilityState == "hidden") {
+        clearTimeout(timer);
+        document.removeEventListener("visibilitychange", checkRedirct);
+      }
+    });
+
+    function tryCallApp(schema) {
+      // try location.href && iframe.src
+      setTimeout(() => (location.href = schema), 0);
+      setTimeout(() => {
+        const ifr = document.createElement("iframe");
+        ifr.style.display = "none !important";
+        ifr.style.width = ifr.style.height = "0px !important";
+        ifr.src = schema;
+        document.body.appendChild(ifr);
+        setTimeout(() => document.body.removeChild(ifr), 300);
+      }, 0);
+    }
+  };
 </script>
 
 </html>
