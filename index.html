@@ -49,22 +49,17 @@
       }
     });
 
+    window.addEventListener("beforeunload", function(event) {
+      if (Date.now() - callAppTime > timeout + timeDiff) {
+        e.preventDefault();
+      }
+      document.querySelector('#msg').innerText = 'timeout';
+    });
+
+
     function tryCallApp(schema) {
-      // try location.href && iframe.src
       setTimeout(() => {
-        if ([appStore, androidMarket].includes(schema) && Date.now() - callAppTime > timeout + timeDiff) return;
         location.href = schema;
-        setTimeout(() => {
-          document.getElementById('msg').innerText = location.href;
-        }, 100);
-      }, 0);
-      !inIos && setTimeout(() => {
-        const ifr = document.createElement("iframe");
-        ifr.style.display = "none";
-        ifr.style.width = ifr.style.height = "0px";
-        ifr.src = schema;
-        document.body.appendChild(ifr);
-        setTimeout(() => document.body.removeChild(ifr), 300);
       }, 0);
     }
   };
