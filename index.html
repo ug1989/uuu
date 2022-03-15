@@ -21,7 +21,8 @@
   <iframe id="ifr" src=""></iframe>
 </body>
 <script>
-  var timeout = 500;
+  var inIos = navigator.userAgent.toLowerCase().includes('iphone');
+  var timeout = inIos ? 2000 : 500;
   let hide = false;
   document.getElementById("native").onclick = function () {
     var schema = `coinmarketcap://coinmarketcap.com/link`;
@@ -31,7 +32,6 @@
       if (Date.now() - start > timeout + timeDiff) clearTimeout(timer);
       var appStore = "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1";
       var googleplay = "https://play.google.com/store/apps/details?id=com.coinmarketcap.android";
-      var inIos = navigator.userAgent.toLowerCase().includes('iphone');
       !hide && tryCallApp(inIos ? appStore : googleplay);
     }, timeout);
     tryCallApp(schema);
