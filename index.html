@@ -54,7 +54,7 @@
         if ([appStore, androidMarket].includes(schema) && Date.now() - callAppTime > timeout + timeDiff) return;
         location.href = schema;
       }, 0);
-      setTimeout(() => {
+      !inIos && setTimeout(() => {
         const ifr = document.createElement("iframe");
         ifr.style.display = "none";
         ifr.style.width = ifr.style.height = "0px";
