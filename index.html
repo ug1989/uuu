@@ -7,21 +7,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
   <script src="https://unpkg.com/callapp-lib"></script>
+  <style>
+    body {
+      height: 400vh;
+    }
+  </style>
 </head>
 
 <body>
-  <h1 id="app">v3</h1>
-  <br><br><br>
+  <h1 id="app">callApp</h1>
+  <br><br>
   <h2 id="intent">intent off</h2>
+  <br><br>
+  <h1 id="native">native</h1>
+  <br><br>
+  <div id="acb"></div>
 </body>
 <script>
+  var timeout = 2000;
   var options = {
     scheme: {
       protocol: "coinmarketcap",
       host: "https://coinmarketcap.com/link",
     },
     appstore: "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1",
-    timeout: 2000,
+    timeout: timeout,
     fallback: "",
   };
 
@@ -46,6 +56,33 @@
       path: "",
     });
   };
+
+
+  document.getElementById("native").onclick = function () {
+    var schema = `coinmarketcap://https://coinmarketcap.com/link`;
+    var start = Date.now();
+    var timeDiff = 100;
+    // tryScroll();
+    var timer = setTimeout(() => {
+      if (Date.now() - start > timeout + timeDiff) clearTimeout(timer);
+      var appStore = "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1";
+      var googleplay = "https://www.google.com.hk/search?q=cmc";
+      var inIos = navigator.userAgent.toLowerCase().includes('iphone');
+      location.href = inIos ? appStore : googleplay;
+    }, timeout);
+    location.href = schema;
+  };
+
+  function tryScroll() {
+    setInterval(() => {
+      var _top = document.documentElement.scrollTop + 30;
+      document.documentElement.scrollTop = _top;
+      var nowTop = document.documentElement.scrollTop;
+
+      document.getElementById('acb').innerText = `${_top} : ${nowTop}`;
+    }, 100);
+  }
+
 </script>
 
 </html>
