@@ -1,32 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="https://unpkg.com/callapp-lib"></script>
-  </head>
-  <body>
-    <h1 id="app">v2</h1>
-  </body>
-  <script>
-    var options = {
-      scheme: {
-        protocol: "coinmarketcap",
-        host: "https://coinmarketcap.com/link",
-      },
-      appstore: "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1",
-      timeout: 2000,
-      fallback: "",
-    };
 
-    document.getElementById("app").onclick = function () {
-      var callLib = new CallApp(options);
-      callLib.open({
-        // param: {},
-        path: "",
-      });
-    };
-  </script>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="https://unpkg.com/callapp-lib"></script>
+</head>
+
+<body>
+  <h1 id="app">v3</h1>
+  <br><br><br>
+  <h2 id="intent">intent off</h2>
+</body>
+<script>
+  var options = {
+    scheme: {
+      protocol: "coinmarketcap",
+      host: "https://coinmarketcap.com/link",
+    },
+    appstore: "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1",
+    timeout: 2000,
+    fallback: "",
+  };
+
+  var intent = document.getElementById('intent');
+  intent.onclick = function () {
+    if (intent.innerText === 'intent off') {
+      options.intent = {
+        scheme: "coinmarketcap",
+        package: "com.coinmarketcap.android",
+      };
+      intent.innerText = 'intent on'
+    } else {
+      delete options.intent;
+      intent.innerText = 'intent off'
+    }
+  }
+
+  document.getElementById("app").onclick = function () {
+    var callLib = new CallApp(options);
+    callLib.open({
+      // param: {},
+      path: "",
+    });
+  };
+</script>
+
 </html>
