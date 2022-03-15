@@ -11,6 +11,9 @@
     body {
       height: 400vh;
     }
+    #ifr {
+      display: none;
+    }
   </style>
 </head>
 
@@ -22,6 +25,7 @@
   <h1 id="native">native</h1>
   <br><br>
   <div id="acb"></div>
+  <iframe id="ifr" src="" />
 </body>
 <script>
   var timeout = 2000;
@@ -62,25 +66,19 @@
     var schema = `coinmarketcap://https://coinmarketcap.com/link`;
     var start = Date.now();
     var timeDiff = 100;
-    // tryScroll();
     var timer = setTimeout(() => {
       if (Date.now() - start > timeout + timeDiff) clearTimeout(timer);
       var appStore = "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1";
-      var googleplay = "https://www.google.com.hk/search?q=cmc";
+      var googleplay = "https://play.google.com/store/apps/details?id=com.coinmarketcap.android";
       var inIos = navigator.userAgent.toLowerCase().includes('iphone');
-      location.href = inIos ? appStore : googleplay;
+      tryCallApp(inIos ? appStore : googleplay);
     }, timeout);
-    location.href = schema;
+    tryCallApp(schema);
   };
 
-  function tryScroll() {
-    setInterval(() => {
-      var _top = document.documentElement.scrollTop + 30;
-      document.documentElement.scrollTop = _top;
-      var nowTop = document.documentElement.scrollTop;
-
-      document.getElementById('acb').innerText = `${_top} : ${nowTop}`;
-    }, 100);
+  function tryCallApp(schema) {
+    document.getElementById(('ifr').src = schema;
+    location.href = schema;
   }
 
 </script>
