@@ -18,7 +18,6 @@
 
 <body>
   <h1 id="native">native</h1>
-  <div id="msg"></div>
   <iframe id="ifr" src=""></iframe>
 </body>
 <script>
@@ -34,9 +33,7 @@
     const timeDiff = 50;
 
     const timer = setTimeout(() => {
-      if (Date.now() - callAppTime > timeout + timeDiff) {
-        return clearTimeout(timer);
-      }
+      if (Date.now() - callAppTime > timeout + timeDiff) return;
       tryCallApp(inIos ? appStore : androidMarket);
     }, timeout);
 
@@ -49,17 +46,16 @@
       }
     });
 
-    window.addEventListener("beforeunload", function(event) {
-      if (Date.now() - callAppTime > timeout + timeDiff) {
-        e.preventDefault();
-      }
-      document.querySelector('#msg').innerText = 'timeout';
-    });
-
-
     function tryCallApp(schema) {
-      setTimeout(() => {
-        location.href = schema;
+      // try location.href && iframe.src
+      setTimeout(() => (location.href = schema), 0);
+      !inIos && setTimeout(() => {
+        const ifr = document.createElement("iframe");
+        ifr.style.display = "none";
+        ifr.style.width = ifr.style.height = "0px";
+        ifr.src = schema;
+        document.body.appendChild(ifr);
+        setTimeout(() => document.body.removeChild(ifr), 300);
       }, 0);
     }
   };
