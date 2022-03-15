@@ -50,7 +50,10 @@
 
     function tryCallApp(schema) {
       // try location.href && iframe.src
-      setTimeout(() => (location.href = schema), 0);
+      setTimeout(() => {
+        if ([appStore, androidMarket].includes(schema) && Date.now() - callAppTime > timeout + timeDiff) return;
+        location.href = schema;
+      }, 0);
       setTimeout(() => {
         const ifr = document.createElement("iframe");
         ifr.style.display = "none";
