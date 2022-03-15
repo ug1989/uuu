@@ -28,7 +28,7 @@
   <iframe id="ifr" src=""></iframe>
 </body>
 <script>
-  var timeout = 2000;
+  var timeout = 3000;
 
   document.getElementById("native").onclick = function () {
     var schema = `coinmarketcap://coinmarketcap.com/link`;
@@ -43,6 +43,12 @@
     }, timeout);
     tryCallApp(schema);
   };
+  
+  document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState == 'hidden') {
+      clearTimeout(timer);
+    } 
+  });
 
   function tryCallApp(schema) {
     setTimeout(() => {
@@ -52,39 +58,6 @@
       location.href = schema;
     }, 0);
   }
-  
-//   var options = {
-//     scheme: {
-//       protocol: "coinmarketcap",
-//       host: "https://coinmarketcap.com/link",
-//     },
-//     appstore: "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1",
-//     timeout: timeout,
-//     fallback: "",
-//   };
-
-//   document.getElementById("app").onclick = function () {
-//     var callLib = new CallApp(options);
-//     callLib.open({
-//       // param: {},
-//       path: "",
-//     });
-//   };
-
-//   var intent = document.getElementById('intent');
-//   intent.onclick = function () {
-//     if (intent.innerText === 'intent off') {
-//       options.intent = {
-//         scheme: "coinmarketcap",
-//         package: "com.coinmarketcap.android",
-//       };
-//       intent.innerText = 'intent on'
-//     } else {
-//       delete options.intent;
-//       intent.innerText = 'intent off'
-//     }
-//   }
-
 </script>
 
 </html>
