@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/callapp-lib"></script>
   </head>
   <body>
-    <h1 id="app">v1</h1>
+    <h1 id="app">v2</h1>
   </body>
   <script>
     var options = {
@@ -16,25 +16,9 @@
         protocol: "coinmarketcap",
         host: "https://coinmarketcap.com/link",
       },
-      universal: {
-        host: "https://coinmarketcap.com/link",
-      },
-      intent: {
-        scheme: "coinmarketcap",
-        package: "com.coinmarketcap.android",
-      },
       appstore: "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1",
       timeout: 2000,
       fallback: "",
-      logFunc: (status) => {
-        if (status === "pending") {
-          console.log("opening");
-        }
-        if (status === "failure") {
-          console.log("open app failure");
-        }
-        console.log(status);
-      },
     };
 
     document.getElementById("app").onclick = function () {
