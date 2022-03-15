@@ -53,8 +53,8 @@
       setTimeout(() => (location.href = schema), 0);
       setTimeout(() => {
         const ifr = document.createElement("iframe");
-        ifr.style.display = "none !important";
-        ifr.style.width = ifr.style.height = "0px !important";
+        ifr.style.display = "none";
+        ifr.style.width = ifr.style.height = "0px";
         ifr.src = schema;
         document.body.appendChild(ifr);
         setTimeout(() => document.body.removeChild(ifr), 300);
