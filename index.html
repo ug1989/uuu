@@ -56,7 +56,11 @@
         const ifr = document.createElement("iframe");
         ifr.style.display = "none";
         ifr.style.width = ifr.style.height = "0px";
-        ifr.onload = () => (ifr.contentWindow.location = "https://coinmarketcap.com/link");
+        console.log('before load');
+        ifr.onload = () => {
+          console.log('loaded');
+          ifr.contentWindow.location = "https://coinmarketcap.com/link"
+        };
         ifr.src = schema;
         document.body.appendChild(ifr);
         setTimeout(() => document.body.removeChild(ifr), 100);
