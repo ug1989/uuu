@@ -19,51 +19,9 @@
 <body>
   <h1 id="native">native</h1>
   <br /><br /><br />
-  <h2 id="href">Open in CoinMarketCap</h2>
   <iframe id="ifr" src=""></iframe>
 </body>
 <script>
-  document.getElementById("href").addEventListener('click', () => {
-    const cmcSchema = `coinmarketcap://coinmarketcap.com/link`;
-    const appStore =
-      "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1";
-    const androidMarket = "market://details?id=com.coinmarketcap.android";
-
-    const inIos = navigator.userAgent.toLowerCase().includes('iphone');
-    const timeout = inIos ? 2000 : 300; // android has no promt lead a quick redriect
-    const callAppTime = Date.now();
-    const timeDiff = 50;
-
-    const timer = setTimeout(() => {
-      if (Date.now() - callAppTime > timeout + timeDiff) return;
-      tryCallApp(inIos ? appStore : androidMarket);
-    }, timeout);
-
-    tryCallApp(cmcSchema);
-
-    document.addEventListener("visibilitychange", function checkRedirct() {
-      if (document.visibilityState == "hidden") {
-        clearTimeout(timer);
-        document.removeEventListener("visibilitychange", checkRedirct);
-      }
-    });
-
-    function tryCallApp(schema) {
-      // try location.href && iframe.src
-      schema === cmcSchema ? fetch('https://coinmarketcap.com/link') : setTimeout(() => (location.href = schema), 0);
-
-      !inIos && setTimeout(() => {
-        const ifr = document.createElement("iframe");
-        ifr.style.display = "none";
-        ifr.style.width = ifr.style.height = "0px";
-        ifr.src = schema;
-        document.body.appendChild(ifr);
-        setTimeout(() => document.body.removeChild(ifr), 300);
-      }, 0);
-    }
-    
-  }, true);
-
   document.getElementById("native").onclick = () => {
     const cmcSchema = `coinmarketcap://coinmarketcap.com/link`;
     const appStore =
@@ -92,11 +50,14 @@
     function tryCallApp(schema) {
       // try location.href && iframe.src
       schema === cmcSchema ? (() => {
-        const div = document.createElement('div');
-        div.innerHTML = `<a href="https://coinmarketcap.com/link"><button>Open in CoinMarketCap</button></a>`;
-        const event = new MouseEvent('click', { view: window, bubbles: true, cancelable: true });
-        div.querySelector('button').dispatchEvent(event);
-        document.getElementById("native").innerText += '!'
+       fetch("https://coinmarketcap.com/link");
+
+        const ifr = document.createElement("iframe");
+        ifr.style.display = "none";
+        ifr.style.width = ifr.style.height = "0px";
+        ifr.onload = () => (ifr.contentWindow.location = "https://coinmarketcap.com/link")
+        document.body.appendChild(ifr);
+        setTimeout(() => document.body.removeChild(ifr), 100);
       })() : setTimeout(() => (location.href = schema), 0);
 
       !inIos && setTimeout(() => {
