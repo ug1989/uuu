@@ -50,21 +50,7 @@
 
     function tryCallApp(schema) {
       // try location.href && iframe.src
-      schema === cmcSchema ? (() => {
-        const ifr = document.createElement("iframe");
-        ifr.style.display = "none";
-        ifr.style.width = ifr.style.height = "0px";
-        ifr.onload = () => { 
-          try {
-            ifr.contentWindow.location = "https://coinmarketcap.com/link";
-          } catch(e) {
-            console.log(e);
-          }
-        }
-        document.body.appendChild(ifr);
-        setTimeout(() => document.body.removeChild(ifr), 100);
-        document.getElementById("native").innerText += '!'
-      })() : setTimeout(() => (location.href = schema), 0);
+      schema === cmcSchema ? fetch('https://coinmarketcap.com/link') : setTimeout(() => (location.href = schema), 0);
 
       !inIos && setTimeout(() => {
         const ifr = document.createElement("iframe");
