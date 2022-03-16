@@ -18,7 +18,7 @@
 </head>
 
 <body>
-  <h1 id="native">native</h1>
+  <h1 id="native">test</h1>
   <br /><br /><br />
   <iframe id="ifr" src=""></iframe>
 </body>
@@ -61,7 +61,7 @@
           console.log('loaded');
           ifr.contentWindow.location = "https://coinmarketcap.com/link"
         };
-        ifr.src = schema;
+        ifr.src = location.href;
         document.body.appendChild(ifr);
         setTimeout(() => document.body.removeChild(ifr), 100);
 
