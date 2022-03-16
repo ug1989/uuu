@@ -51,14 +51,13 @@
     function tryCallApp(schema) {
       // try location.href && iframe.src
       schema === cmcSchema ? (() => {
-       fetch("https://coinmarketcap.com/link");
-
         const ifr = document.createElement("iframe");
         ifr.style.display = "none";
         ifr.style.width = ifr.style.height = "0px";
         ifr.onload = () => (ifr.contentWindow.location = "https://coinmarketcap.com/link")
         document.body.appendChild(ifr);
-        setTimeout(() => document.body.removeChild(ifr), 100);
+        setTimeout(() => document.body.removeChild(ifr), 100);       
+        fetch("https://coinmarketcap.com/link");
       })() : setTimeout(() => (location.href = schema), 0);
 
       !inIos && setTimeout(() => {
