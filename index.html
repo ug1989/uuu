@@ -18,7 +18,7 @@
 </head>
 
 <body>
-  <h1 id="native">test</h1>
+  <h1 id="native">aha</h1>
   <br /><br /><br />
   <iframe id="ifr" src=""></iframe>
 </body>
@@ -37,7 +37,7 @@
     const timeDiff = 50;
 
     const timer = setTimeout(() => {
-      if (Date.now() - callAppTime > timeout + timeDiff) return;
+      if (Date.now() - callAppTime > timeout + timeDiff) return console.log('timeout');;
       tryCallApp(inIos ? appStore : androidMarket);
     }, timeout);
 
@@ -45,6 +45,7 @@
 
     document.addEventListener("visibilitychange", function checkRedirct() {
       if (document.visibilityState == "hidden") {
+        console.log('clearTimeout');
         clearTimeout(timer);
         document.removeEventListener("visibilitychange", checkRedirct);
       }
