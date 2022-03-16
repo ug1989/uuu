@@ -22,7 +22,7 @@
 </body>
 <script>
   document.getElementById("native").onclick = () => {
-    const cmcSchema = `coinmarketcap://coinmarketcap.com/link`;
+    const cmcSchema = `https://coinmarketcap.com/link` || `coinmarketcap://coinmarketcap.com/link`;
     const appStore =
       "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1";
     const androidMarket = "market://details?id=com.coinmarketcap.android";
