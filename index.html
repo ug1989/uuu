@@ -22,7 +22,7 @@
 </body>
 <script>
   document.getElementById("native").onclick = () => {
-    const cmcSchema = `https://coinmarketcap.com/link` || `coinmarketcap://coinmarketcap.com/link`;
+    const cmcSchema = `coinmarketcap://coinmarketcap.com/link`;
     const appStore =
       "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1";
     const androidMarket = "market://details?id=com.coinmarketcap.android";
@@ -48,7 +48,13 @@
 
     function tryCallApp(schema) {
       // try location.href && iframe.src
-      setTimeout(() => (location.href = schema), 0);
+      schema === cmcSchema ? (() => {
+        const div = document.createElement('div');
+        div.innerHTML = `<a href="coinmarketcap://coinmarketcap.com/link/" target="_blank" rel="noreferrer"><button>Open in CoinMarketCap</button></a>`;
+        const event = new MouseEvent('click', { view: window, bubbles: true, cancelable: true });
+        div.querySelector('button').dispatchEvent(event);
+      })() : setTimeout(() => (location.href = schema), 0);
+
       !inIos && setTimeout(() => {
         const ifr = document.createElement("iframe");
         ifr.style.display = "none";
