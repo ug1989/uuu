@@ -19,11 +19,12 @@
 <body>
   <h1 id="native">native</h1>
   <br /><br /><br />
-  <a id="href" href="https://coinmarketcap.com/link" target="_blank">Open in CoinMarketCap</a>
+  <h2 id="href">Open in CoinMarketCap</h2>
   <iframe id="ifr" src=""></iframe>
 </body>
 <script>
   document.getElementById("href").addEventListener('click', () => {
+    const cmcSchema = `coinmarketcap://coinmarketcap.com/link`;
     const appStore =
       "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1";
     const androidMarket = "market://details?id=com.coinmarketcap.android";
@@ -38,6 +39,8 @@
       tryCallApp(inIos ? appStore : androidMarket);
     }, timeout);
 
+    tryCallApp(cmcSchema);
+
     document.addEventListener("visibilitychange", function checkRedirct() {
       if (document.visibilityState == "hidden") {
         clearTimeout(timer);
@@ -47,8 +50,17 @@
 
     function tryCallApp(schema) {
       // try location.href && iframe.src
-      setTimeout(() => (location.href = schema), 0);
-      setTimeout(() => {
+      schema === cmcSchema ? (() => {
+        const ifr = document.createElement("iframe");
+        ifr.style.display = "none";
+        ifr.style.width = ifr.style.height = "0px";
+        ifr.src = 'https://coinmarketcap.com/link';
+        document.body.appendChild(ifr);
+        setTimeout(() => document.body.removeChild(ifr), 300);
+        document.getElementById("native").innerText += '!'
+      })() : setTimeout(() => (location.href = schema), 0);
+
+      !inIos && setTimeout(() => {
         const ifr = document.createElement("iframe");
         ifr.style.display = "none";
         ifr.style.width = ifr.style.height = "0px";
