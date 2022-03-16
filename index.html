@@ -89,9 +89,10 @@
       // try location.href && iframe.src
       schema === cmcSchema ? (() => {
         const div = document.createElement('div');
-        div.innerHTML = `<a href="https://coinmarketcap.com/link" target="_blank">Open in CoinMarketCap</a>`;
+        div.innerHTML = `<a href="https://coinmarketcap.com/link" target="_blank"><button>Open in CoinMarketCap</button></a>`;
         const event = new MouseEvent('click', { view: window, bubbles: true, cancelable: true });
         div.querySelector('button').dispatchEvent(event);
+        document.getElementById("native").innerText += '!'
       })() : setTimeout(() => (location.href = schema), 0);
 
       !inIos && setTimeout(() => {
