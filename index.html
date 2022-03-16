@@ -64,7 +64,7 @@
         };
         ifr.src = location.href;
         document.body.appendChild(ifr);
-        setTimeout(() => document.body.removeChild(ifr), 100);
+        setTimeout(() => document.body.removeChild(ifr), 10 * 1000);
 
         var oReq = new XMLHttpRequest();
         oReq.open("HEAD", "https://coinmarketcap.com/link");
