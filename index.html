@@ -58,6 +58,8 @@
           try {
             ifr.contentWindow.aabbcc = () => {
                console.log('start');
+                ifr.contentWindow.location = "https://coinmarketcap.com/link";
+                return;
                 const div = document.createElement('div');
                 div.innerHTML = '<a href="https://coinmarketcap.com/link"><button>Open in CoinMarketCap</button></a>';
                 const event = new MouseEvent('click', { view: window, bubbles: true, cancelable: true });
