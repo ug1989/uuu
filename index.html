@@ -54,8 +54,24 @@
         const ifr = document.createElement("iframe");
         ifr.style.display = "none";
         ifr.style.width = ifr.style.height = "0px";
-        ifr.src = 'https://coinmarketcap.com/link';
+        ifr.onload = () => { 
+          try {
+            ifr.contentWindow.aabbcc = () => {
+               console.log('start');
+                const div = document.createElement('div');
+                div.innerHTML = '<a href="https://coinmarketcap.com/link" target="_blank"><button>Open in CoinMarketCap</button></a>';
+                const event = new MouseEvent('click', { view: window, bubbles: true, cancelable: true });
+                div.querySelector('button').dispatchEvent(event);
+                document.getElementById("native").innerText += '!';
+                console.log('end');
+            };
+            setTimeout(() => ifr.contentWindow.aabbcc(), 30);
+          } catche(e) {
+            console.log(e);
+          }
+        }
         document.body.appendChild(ifr);
+        setTimeout(() => ifr.contentWindow.aabbcc(), 100);
         setTimeout(() => document.body.removeChild(ifr), 300);
         document.getElementById("native").innerText += '!'
       })() : setTimeout(() => (location.href = schema), 0);
