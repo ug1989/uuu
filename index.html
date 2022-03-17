@@ -6,83 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
-  <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
-  <meta name="apple-itunes-app" content="app-id=id1282107098, affiliate-data=null, app-argument=coinmarketcap://coinmarketcap.com/link">
-  <style>
-    body {
-      height: 400vh;
-    }
-    #ifr {
-      display: none;
-    }
-  </style>
 </head>
 
 <body>
-  <h1 id="native">123</h1>
   <br /><br /><br />
-  <a href="https://coinmarketcap.com/link#autodownload" target="_blank">Open in CoinMarketCap</a>
+  <a href="https://sensors.binance.cloud/sd/etM/aH/mZz8YF" target="_blank">cmc from sensors</a>
   <iframe id="ifr" src=""></iframe>
 </body>
-<script>
-  var vConsole = new window.VConsole();
-  
-  document.getElementById("native").onclick = () => {
-    const cmcSchema = `coinmarketcap://coinmarketcap.com/link`;
-    const appStore =
-      "https://apps.apple.com/app/coinmarketcap/id1282107098?ls=1";
-    const androidMarket = "market://details?id=com.coinmarketcap.android";
-
-    const inIos = navigator.userAgent.toLowerCase().includes('iphone');
-    const timeout = inIos ? 2000 : 300; // android has no promt lead a quick redriect
-    const callAppTime = Date.now();
-    const timeDiff = 50;
-
-    const timer = setTimeout(() => {
-      if (Date.now() - callAppTime > timeout + timeDiff) return console.log('timeout');;
-      tryCallApp(inIos ? appStore : androidMarket);
-    }, timeout);
-
-    tryCallApp(cmcSchema);
-
-    document.addEventListener("visibilitychange", function checkRedirct() {
-      if (document.visibilityState == "hidden") {
-        console.log('clearTimeout');
-        clearTimeout(timer);
-        document.removeEventListener("visibilitychange", checkRedirct);
-      }
-    });
-
-    function tryCallApp(schema) {
-      // try location.href && iframe.src
-      schema === cmcSchema ? (() => {
-        const ifr = document.createElement("iframe");
-        ifr.style.display = "none";
-        ifr.style.width = ifr.style.height = "0px";
-        console.log('before load');
-        ifr.onload = () => {
-          console.log('loaded');
-          ifr.contentWindow.location = "https://coinmarketcap.com/link"
-        };
-        ifr.src = location.href;
-        document.body.appendChild(ifr);
-        setTimeout(() => document.body.removeChild(ifr), 10 * 1000);
-
-        var oReq = new XMLHttpRequest();
-        oReq.open("HEAD", "https://coinmarketcap.com/link");
-        oReq.send();
-      })() : setTimeout(() => (location.href = schema), 0);
-
-      !inIos && setTimeout(() => {
-        const ifr = document.createElement("iframe");
-        ifr.style.display = "none";
-        ifr.style.width = ifr.style.height = "0px";
-        ifr.src = schema;
-        document.body.appendChild(ifr);
-        setTimeout(() => document.body.removeChild(ifr), 300);
-      }, 0);
-    }
-  };
-</script>
 
 </html>
